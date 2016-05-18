@@ -16,5 +16,16 @@ public class Main {
         player.chooseWeapon();
 
         player.chooseLocation();
+
+        System.out.println("Type in a number...");
+        String num = scanner.nextLine();
+        int numInt = Integer.valueOf(num);
+
+        if (numInt < 0 ) {
+            System.out.println("That's a negative numbner!");
+        }
+        else {
+            System.out.println("That's a positive number!");
+        }
     }
 }
