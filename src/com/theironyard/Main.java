@@ -4,37 +4,17 @@ import java.util.Scanner;
 
 public class Main {
 
+    static Scanner scanner = new Scanner(System.in);
+
     public static void main(String[] args) throws Exception {
         System.out.println("Welcome Traveler!");
-        System.out.println("What is your name?");
 
-        Scanner scanner = new Scanner(System.in);
+        Player player = new Player();
 
-        String name = scanner.nextLine();
-        System.out.println("Welcome, " + name);
+        player.chooseName();
 
-        System.out.println("Choose your weapon [sword/mace]");
-        String weapon = scanner.nextLine();
+        player.chooseWeapon();
 
-        if (weapon.equalsIgnoreCase("sword")) {
-            System.out.println("Sword is a fine choice!");
-        }
-        else if (weapon.equalsIgnoreCase("mace")){
-            System.out.println("Mace is a fine choice!");
-        }
-        else {
-            throw new Exception("Invalid Weapon!");
-        }
-
-        System.out.println("Choose your location [forest/tunnel]");
-        String location = scanner.nextLine();
-
-        if (location.equalsIgnoreCase("forest")) {
-            System.out.println("Entering forest...");
-
-        }
-        else if (location.equalsIgnoreCase("tunnel")) {
-            System.out.println("Entering tunnel...");
-        }
+        player.chooseLocation();
     }
 }
