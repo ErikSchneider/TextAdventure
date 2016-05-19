@@ -17,15 +17,12 @@ public class Main {
 
         player.chooseLocation();
 
-        System.out.println("Type in a number...");
-        String num = scanner.nextLine();
-        int numInt = Integer.valueOf(num);
+        player.findItem("armor");
 
-        if (numInt < 0 ) {
-            System.out.println("That's a negative numbner!");
-        }
-        else {
-            System.out.println("That's a positive number!");
-        }
+        player.findItem("potion");
+
+        System.out.println(player.name);
     }
+
+
 }
