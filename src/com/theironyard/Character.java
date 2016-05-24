@@ -28,4 +28,13 @@ public class Character { //will be generic class that holds player data
             System.out.printf("%s has died.\n", enemy.name);
         }
     }
+
+    @Override
+    public String toString() {
+        return "Character{" +
+                "name='" + name + '\'' +
+                ", health=" + health +
+                ", damage=" + damage +
+                '}';
+    }
 }
