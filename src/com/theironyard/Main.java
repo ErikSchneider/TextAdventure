@@ -17,7 +17,9 @@ public class Main {
         player.findItem("armor");
         player.findItem("potion");
 
-        System.out.println(player.name);
+        Enemy ogre = new Enemy("Ogre", 10, 10);
+        player.battle(ogre);
+
     }
 
     public static String nextLine() {
