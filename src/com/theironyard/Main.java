@@ -1,9 +1,12 @@
 package com.theironyard;
 
+import jodd.json.JsonParser;
 import jodd.json.JsonSerializer;
 
+import javax.swing.text.StringContent;
 import javax.tools.FileObject;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
@@ -11,24 +14,44 @@ import java.util.Scanner;
 
 public class Main {
 
+    static final String SAVE_FILE = "game.json";
     static Scanner scanner = new Scanner(System.in);
-    static Player player = new Player();
+    static Player player;
 
     public static void main(String[] args) throws Exception {
+        player = loadGame();
+        if (player == null) {
+            player = new Player();
+            System.out.println("Starting new game...");
+        }
+
+        else {
+            System.out.println("Found Save file.");
+            System.out.println("Start a new game instead [Y / N]");
+            String answer = scanner.nextLine();
+            if (answer.equalsIgnoreCase("Y")) {
+                player = new Player();
+            }
+        }
+
         System.out.println("Welcome Traveler!");
 
-        player.chooseName();
-        player.chooseWeapon();
-        player.chooseLocation();
+        if (player.name == null) player.chooseName();
+        if (player.weapon == null) player.chooseWeapon();
+        if (player.location == null) player.chooseLocation();
 
-        player.findItem("armor");
-        player.findItem("potion");
+        if (player.items.isEmpty()) {
+            player.findItem("armor");
+            player.findItem("potion");
+        }
 
         Enemy ogre = new Enemy("Ogre", 10, 10);
         player.battle(ogre);
 
         System.out.println(player);
         System.out.println(ogre);
+
+        saveGame();
 
     }
 
@@ -59,7 +82,7 @@ public class Main {
         JsonSerializer serializer = new JsonSerializer();
         String json = serializer.include("*").serialize(player);
 
-        File f = new File("game.json");
+        File f = new File(SAVE_FILE);
         try {
             FileWriter fw = new FileWriter(f);
             fw.write(json);
@@ -67,6 +90,22 @@ public class Main {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+    }
+
+    public static Player loadGame() {
+        File f = new File(SAVE_FILE);
+        try {
+            Scanner scanner = new Scanner(f);
+            scanner.useDelimiter("\\Z");
+            String contents = scanner.next();
+            JsonParser parser = new JsonParser();
+            return parser.parse(contents, Player.class);
+        } catch (FileNotFoundException e) {
+        }
+
+        return null;
+
 
     }
 
