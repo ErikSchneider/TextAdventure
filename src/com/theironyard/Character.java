@@ -36,5 +36,18 @@ public class Character { //will be generic class that holds player data
                 ", health=" + health +
                 ", damage=" + damage +
                 '}';
+
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getHealth() {
+        return health;
+    }
+
+    public int getDamage() {
+        return damage;
     }
 }

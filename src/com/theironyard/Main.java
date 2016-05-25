@@ -1,5 +1,11 @@
 package com.theironyard;
 
+import jodd.json.JsonSerializer;
+
+import javax.tools.FileObject;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Scanner;
 
 
@@ -35,6 +41,10 @@ public class Main {
 
                 }
             }
+            else if (line.equals("/save")) {
+                saveGame();
+            }
+
             else {
                 System.out.println("Command not found.");
             }
@@ -43,6 +53,21 @@ public class Main {
 
         }
         return line;
+    }
+
+    public static void saveGame() {
+        JsonSerializer serializer = new JsonSerializer();
+        String json = serializer.include("*").serialize(player);
+
+        File f = new File("game.json");
+        try {
+            FileWriter fw = new FileWriter(f);
+            fw.write(json);
+            fw.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
 
